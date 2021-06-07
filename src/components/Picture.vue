@@ -12,9 +12,14 @@
       <li v-for="detail in details" :key="detail">{{ detail }}</li>
       <li v-for="size in sizes" :key="size">{{ size }}</li>
     </ul>
-    <div v-for="variant in variants" :key="variant.variantId">
-      <p>{{ variant.variantColor }}</p>
+    
+    <div v-for="variant in variants" 
+    :key="variant.variantId"
+    class="color-box"
+    :style="{ backgroundColor: variant.variantColor } "
+      @mouseover="updateProduct(variant.variantImage)">
     </div>
+
     <button v-on:click="addToCart">Add to cart</button>
 
     <div class="cart">
@@ -47,7 +52,6 @@ export default {
         variantColor: 'blue',
         variantImage: 'https://www.vuemastery.com/images/challenges/vmSocks-blue-onWhite.jpg'
       }
-    
      ], 
      cart :0
     }
@@ -58,8 +62,12 @@ export default {
         {
            this.cart += 1
         }
+    },
+      updateProduct(variantImage) {
+      this.image = variantImage
     }
   }
+  
 
     
 
@@ -67,5 +75,34 @@ export default {
 
 </script>
 <style scoped>
+button {
+  margin-top: 50px;
+  border: none;
+  background-color: #09c422;
+    box-shadow: 0px .5px 1px #d8d8d8;
+  color: white;
+  height: 60px;
+  width: 100px;
+  font-size: 24px;
+} 
+.cart {
+  margin-right: 25px;
+  float: right;
+  border: 1px solid #d8d8d8;
+  padding: 5px 20px;
+}
+img{
+  border: 3px solid #055a2b;
+  width: 30%;
+  margin: 40px;
+  box-shadow: 0px .5px 1px #d8d8d8;
+
+}
+.color-box{
+  width: 40px;
+  height: 40px;
+  margin-top: 5px;
+}
+
 </style>
         

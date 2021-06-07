@@ -1,22 +1,26 @@
         <template>
   <div class="product">
-    <img :src="image" alt="" />
+    <img :src="image" alt="" width="400" />
     <h1>
       {{ product }}
       <a :href="link" target="_blank">More products like this</a>
     </h1>
-    <p v-if="inventory>10">instock</p>
-    <p v-else-if="inventory <=10 && inventory >0">almost sold out</p>
+    <p v-if="inventory > 10">instock</p>
+    <p v-else-if="inventory <= 10 && inventory > 0">almost sold out</p>
     <p v-else>outstock</p>
-   <ul>
-       <li v-for="detail in details" :key="detail">{{ detail }}</li>
-   <li v-for="size in sizes" :key="size">{{ size }}</li>
-   </ul>
-     <div v-for="variant in variants" :key="variant.variantId">
-        <p>{{ variant.variantColor }}</p>
+    <ul>
+      <li v-for="detail in details" :key="detail">{{ detail }}</li>
+      <li v-for="size in sizes" :key="size">{{ size }}</li>
+    </ul>
+    <div v-for="variant in variants" :key="variant.variantId">
+      <p>{{ variant.variantColor }}</p>
+    </div>
+    <button v-on:click="addToCart">Add to cart</button>
+
+    <div class="cart">
+      <p>Cart({{ cart }})</p>
+    </div>
   </div>
-  </div>
-  
 </template>
 
     <script>
@@ -31,33 +35,37 @@ export default {
         "https://www.amazon.com/s/ref=nb_sb_noss?url=search-alias%3Daps&field-keywords=socks",
         inventory :8,
         details: ['80% cotton', '20% polyester', 'Gender-neutral'],
-          variants: [
+    
+     variants: [
       {
         variantId: 2234,
-        variantColor: 'green'    
+        variantColor: 'green',
+        variantImage: 'https://www.vuemastery.com/images/challenges/vmSocks-green-onWhite.jpg'
       },
       {
         variantId: 2235,
-        variantColor: 'blue'
+        variantColor: 'blue',
+        variantImage: 'https://www.vuemastery.com/images/challenges/vmSocks-blue-onWhite.jpg'
       }
-    ],
-    sizes: ['S', 'M', 'L', 'XL', 'XXL', 'XXXL'],
-   
-    };
-  },
-};
+    
+     ], 
+     cart :0
+    }
+    
+    },
+    methods:{
+        addToCart:function()
+        {
+           this.cart += 1
+        }
+    }
+  }
+
+    
+
 
 
 </script>
 <style scoped>
-body{
-    display: flex;
-    justify-content: center;
-    text-align: center;
-}
-ul{
-    text-decoration: none;
-}
-
 </style>
         

@@ -1,20 +1,20 @@
 <template>
   <div id="app">  
      
-     <!-- <Picture /> -->
+     <Picture />
      <!-- <event-card/> -->
   </div>
 </template>
 
 <script>
-// import Picture from './components/Picture'
+import Picture from './components/Picture'
 // import EventCard from './components/EventCard.vue'
 
 
 export default {
   name: 'App',
   components: {
-    // Picture
+    Picture
     // EventCard //its just test (uncomment them)
        
  

@@ -1,65 +1,60 @@
-                <template>
-  <div class="product">
+<template>
+  <div>
+    <h1>{{ product }}</h1>
+    <p v-if="inStock">In Stock</p>
+    <p v-else :class="{ outOfStock: !inStock }">Out of Stock</p>
     
     <div class="product-image">
       <img :src="image" />
     </div>
+    <ul>
+      <li v-for="detail in details" :key="detail">{{ detail }}</li>
+    </ul>
 
-    <div class="product-info">
-      <h1>{{ title }}</h1>
-      <p v-if="inStock">In Stock</p>
-      <p v-else>Out of Stock</p>
-      <p>{{ sale }}</p>
+    <div
+      class="color-box"
+      v-for="variant in variants"
+      :key="variant.variantId"
+      :style="{ backgroundColor: variant.variantColor }"
+      @mouseover="updateProduct(variant.variantImage)"
+    ></div>
 
-      <ul>
-        <li v-for="detail in details" :key="detail">{{ detail }}</li>
-      </ul>
+    <button
+      v-on:click="addToCart"
+      :disabled="!inStock"
+      :class="{ disabledButton: !inStock }"
+    >
+      Add to cart
+    </button>
 
-      <div
-        class="color-box"
-        v-for="(variant, index) in variants"
-        :key="variant.variantId"
-        :style="{ backgroundColor: variant.variantColor }"
-        @mouseover="updateProduct(index)"
-      ></div>
-
-      <button
-        v-on:click="addToCart"
-        :disabled="!inStock"
-        :class="{ disabledButton: !inStock }"
-      >
-        Add to cart
-      </button>
-
-      <div class="cart">
+    <div class="cart">
         <p>Cart({{ cart }})</p>
       </div>
-    </div>
   </div>
 </template>
 
-      <script>
+<script>
 export default {
   data() {
     return {
       product: "Socks",
       brand: "vue masterful",
-      selectedvVriant: 0,
+      selectedVariant: 0,
       details: ["80% cotton", "20% polyester", "Gender-neutral"],
       variants: [
         {
           variantId: 2234,
           variantColor: "green",
+          variantQuantity: 10,
           variantImage:
             "https://www.vuemastery.com/images/challenges/vmSocks-green-onWhite.jpg",
-          variantQuantity: 10,
         },
         {
           variantId: 2235,
           variantColor: "blue",
+          variantQuantity: 0,
           variantImage:
             "https://www.vuemastery.com/images/challenges/vmSocks-blue-onWhite.jpg",
-          variantQuantity: 0,
         },
       ],
       cart: 0,
@@ -67,13 +62,14 @@ export default {
     };
   },
   methods: {
-    addToCart: function () {
+    addToCart: function() {
       this.cart += 1;
     },
+    updateProduct(index) {
+      this.selectedVariant = index;
+    },
   },
-  updateProduct(index) {
-    this.selectedvariant = index;
-  },
+
   computed: {
     title() {
       return this.brand + " " + this.product;
@@ -82,6 +78,7 @@ export default {
       return this.variants[this.selectedVariant].variantImage;
     },
     inStock() {
+      // return this.variants[this.selectedVariant].variantQuantity;
       return this.variants[this.selectedVariant].variantQuantity;
     },
     sale() {
@@ -93,14 +90,20 @@ export default {
   },
 };
 </script>
-  <style scoped>
+<style scoped>
 body {
   font-family: tahoma;
   color: #282828;
   margin: 0px;
 }
 
-.product {
+.nav-bar {
+  background: linear-gradient(-90deg, #84cf6a, #16c0b0);
+  height: 60px;
+  margin-bottom: 15px;
+}
+
+#app {
   display: flex;
 }
 
@@ -108,7 +111,7 @@ img {
   border: 1px solid #d8d8d8;
   width: 70%;
   margin: 40px;
-  box-shadow: 0px .5px 1px #d8d8d8;
+  box-shadow: 0px 0.5px 1px #d8d8d8;
 }
 
 .product-image {
@@ -136,12 +139,12 @@ img {
 button {
   margin-top: 30px;
   border: none;
-  background-color: #1E95EA;
+  background-color: #1e95ea;
   color: white;
   height: 40px;
   width: 100px;
   font-size: 14px;
-} 
+}
 
 .disabledButton {
   background-color: #d8d8d8;
@@ -150,11 +153,11 @@ button {
 .review-form {
   width: 30%;
   padding: 20px;
-  border: 1px solid #d8d8d8;  
+  border: 1px solid #d8d8d8;
 }
 
 input {
-  width: 100%;  
+  width: 100%;
   height: 25px;
   margin-bottom: 20px;
 }
@@ -163,5 +166,8 @@ textarea {
   width: 100%;
   height: 60px;
 }
+
+.outOfStock {
+  text-decoration: line-through;
+}
 </style>
-          

@@ -2,7 +2,7 @@
   <div class="product">
     <img :src="image" alt="" width="400" />
     <h1>
-      {{ product }}
+      {{ title }}
       <a :href="link" target="_blank">More products like this</a>
     </h1>
     <p v-if="inventory > 10">instock</p>
@@ -13,11 +13,11 @@
       <li v-for="size in sizes" :key="size">{{ size }}</li>
     </ul>
     
-    <div v-for="variant in variants" 
+    <div v-for="(variant ,index) in variants" 
     :key="variant.variantId"
     class="color-box"
     :style="{ backgroundColor: variant.variantColor } "
-      @mouseover="updateProduct(variant.variantImage)">
+      @mouseover="updateProduct(index)">
     </div>
 
     <button v-on:click="addToCart">Add to cart</button>
@@ -34,11 +34,11 @@ export default {
   data() {
     return {
       product: "Socks",
-      image:
-        "https://www.vuemastery.com/images/challenges/vmSocks-green-onWhite.jpg",
+      brand :'vue masterful',
+     selectedvVriant:0,
       link:
         "https://www.amazon.com/s/ref=nb_sb_noss?url=search-alias%3Daps&field-keywords=socks",
-        inventory :8,
+    
         details: ['80% cotton', '20% polyester', 'Gender-neutral'],
     
      variants: [
@@ -63,11 +63,28 @@ export default {
            this.cart += 1
         }
     },
-      updateProduct(variantImage) {
-      this.image = variantImage
+      updateProduct(index) {
+      this.selectedvariant = index
+      console.log(index)
+    },
+       computed: {
+        title() {
+            return this.brand + ' ' + this.product  
+        },
+        image(){
+            return this.variants[this.selectedVariant].variantImage
+        },
+        inStock(){
+            return this.variants[this.selectedVariant].variantQuantity
+        },
+        sale() {
+          if (this.onSale) {
+            return this.brand + ' ' + this.product + ' are on sale!'
+          } 
+            return  this.brand + ' ' + this.product + ' are not on sale'
+        }
     }
   }
-  
 
     
 

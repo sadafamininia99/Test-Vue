@@ -1,12 +1,21 @@
 <template>
-  <div>
+
+  <div class="navbar">
     <h1>{{ product }}</h1>
     <p v-if="inStock">In Stock</p>
     <p v-else :class="{ outOfStock: !inStock }">Out of Stock</p>
     
     <div class="product-image">
-      <img :src="image" />
+      <img :src="image" width="400px" height="200px"/>
     </div>
+
+       <div class="product-info">
+      <h1>{{ title }}</h1>
+      <p v-if="inStock">In Stock</p>
+      <p v-else>Out of Stock</p>
+      <p>{{ sale }}</p>
+       </div>
+
     <ul>
       <li v-for="detail in details" :key="detail">{{ detail }}</li>
     </ul>
